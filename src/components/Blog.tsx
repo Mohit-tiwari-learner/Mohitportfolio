@@ -127,7 +127,7 @@ function BlogSectionHeader() {
 
 /* ─────────── Featured Card ─────────── */
 function FeaturedBlogCard({ post }: { post: BlogPost }) {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLAnchorElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-10%" });
 
     return (
@@ -198,7 +198,7 @@ function FeaturedBlogCard({ post }: { post: BlogPost }) {
 
 /* ─────────── Regular Card ─────────── */
 function BlogCard({ post, index }: { post: BlogPost; index: number }) {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLAnchorElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-5%" });
 
     return (

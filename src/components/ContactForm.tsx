@@ -221,7 +221,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                                         transition={{ delay: 0.1 }}
                                         className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-400"
                                     >
-                                        Let's Create Together
+                                        Let&apos;s Create Together
                                     </motion.h3>
                                     <motion.p
                                         initial={{ opacity: 0, y: 10 }}
@@ -251,7 +251,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                                         </div>
                                         <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Message Sent!</h4>
                                         <p className="text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
-                                            Thanks for reaching out. I'll get back to you shortly.
+                                            Thanks for reaching out. I&apos;ll get back to you shortly.
                                         </p>
                                     </motion.div>
                                 ) : (
@@ -261,7 +261,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                                                 label="Name"
                                                 id="name"
                                                 value={formState.name}
-                                                onChange={(val) => handleChange('name', val)}
+                                                onChange={(val: string) => handleChange('name', val)}
                                                 onBlur={() => handleBlur('name')}
                                                 error={errors.name}
                                                 placeholder="John Doe"
@@ -272,7 +272,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                                                 id="email"
                                                 type="email"
                                                 value={formState.email}
-                                                onChange={(val) => handleChange('email', val)}
+                                                onChange={(val: string) => handleChange('email', val)}
                                                 onBlur={() => handleBlur('email')}
                                                 error={errors.email}
                                                 placeholder="john@example.com"
@@ -284,7 +284,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                                             label="Subject"
                                             id="subject"
                                             value={formState.subject}
-                                            onChange={(val) => handleChange('subject', val)}
+                                            onChange={(val: string) => handleChange('subject', val)}
                                             onBlur={() => handleBlur('subject')}
                                             error={errors.subject}
                                             placeholder="Project Inquiry"

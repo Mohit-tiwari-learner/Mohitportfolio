@@ -1,0 +1,77 @@
+﻿
+> masst-portfolio@0.1.0 build
+> next build
+
+   Γû▓ Next.js 14.1.0
+
+node.exe : 
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (:St  
+  ring) [], RemoteExcept   
+ ion
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+> Build error occurred
+Error: EINVAL: invalid 
+argument, readlink 'C:\User
+s\LENOVO\OneDrive\Desktop\m
+asst portfolio\.next\server
+\app\page-mohit.js'
+    at async 
+Object.readlink (node:inter
+nal/fs/promises:972:10)
+    at async C:\Users\LENOV
+O\OneDrive\Desktop\masst po
+rtfolio\node_modules\next\d
+ist\lib\recursive-delete.js
+:58:30
+    at async Promise.all 
+(index 3)
+    at async 
+recursiveDelete (C:\Users\L
+ENOVO\OneDrive\Desktop\mass
+t portfolio\node_modules\ne
+xt\dist\lib\recursive-delet
+e.js:51:5)
+    at async C:\Users\LENOV
+O\OneDrive\Desktop\masst po
+rtfolio\node_modules\next\d
+ist\lib\recursive-delete.js
+:68:17
+    at async Promise.all 
+(index 0)
+    at async 
+recursiveDelete (C:\Users\L
+ENOVO\OneDrive\Desktop\mass
+t portfolio\node_modules\ne
+xt\dist\lib\recursive-delet
+e.js:51:5)
+    at async C:\Users\LENOV
+O\OneDrive\Desktop\masst po
+rtfolio\node_modules\next\d
+ist\lib\recursive-delete.js
+:68:17
+    at async Promise.all 
+(index 8)
+    at async 
+recursiveDelete (C:\Users\L
+ENOVO\OneDrive\Desktop\mass
+t portfolio\node_modules\ne
+xt\dist\lib\recursive-delet
+e.js:51:5) {
+  errno: -4071,
+  code: 'EINVAL',
+  syscall: 'readlink',
+  path: 'C:\\Users\\LENOVO\
+\OneDrive\\Desktop\\masst p
+ortfolio\\.next\\server\\ap
+p\\page-mohit.js'
+}

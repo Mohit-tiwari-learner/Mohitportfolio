@@ -29,13 +29,13 @@ export function Contact() {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground mb-6">
-                            Let's build <br />
+                            Let&apos;s build <br />
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 animate-gradient-x bg-[length:200%_auto]">
                                 something epic.
                             </span>
                         </h2>
                         <p className="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                            I'm currently available for freelance projects and open to full-time opportunities. If you have an idea that needs to be realized, let's talk.
+                            I&apos;m currently available for freelance projects and open to full-time opportunities. If you have an idea that needs to be realized, let&apos;s talk.
                         </p>
                     </motion.div>
 
@@ -56,7 +56,7 @@ export function Contact() {
                                 className="relative bg-gradient-to-br from-foreground/90 to-foreground text-background font-bold text-lg px-8 py-6 rounded-full group-hover:shadow-[0_0_60px_20px_rgba(139,92,246,0.3)] transition-all duration-500 group-hover:scale-105 backdrop-blur-sm border border-border/20"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
-                                    Let's Connect
+                                    Let&apos;s Connect
                                     <ArrowRight className="ml-1 group-hover:translate-x-2 transition-transform duration-300" size={20} />
                                 </span>
                             </LiquidButton>

@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Image, Environment, Fog } from "@react-three/drei";
+import { Image, Environment } from "@react-three/drei";
 import * as TWO from "three";
 import { cn } from "@/lib/utils";
 
@@ -211,7 +211,6 @@ function GalleryItemImpl({ index, total, img, speed, zSpacing, viewport }: any) 
         <Image
             ref={ref}
             url={img.src}
-            alt={img.alt}
             position={[0, 0, zPos]}
             scale={[viewport.width / 2.5, viewport.width / 2.5 / 1.5]}
             transparent
