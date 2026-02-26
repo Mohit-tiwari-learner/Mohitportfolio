@@ -1,0 +1,26 @@
+.collision-falling-text-container {
+    overflow: visible;
+}
+
+.collision-falling-text {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.falling-letter {
+    transition: color 0.3s ease;
+    cursor: default;
+}
+
+.falling-letter.highlighted {
+    font-style: italic;
+}
+
+.falling-letter.space-char {
+    width: 0.3em;
+}
+
+/* Fluid heading sizing used by the About section */
+.fluid-heading {
+    font-size: clamp(28px, 5vw + 0.5rem, 48px);
+}

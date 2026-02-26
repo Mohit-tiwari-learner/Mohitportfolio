@@ -1,0 +1,361 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* Design tokens for mobile refinement */
+:root {
+  --mobile-base-size: 15px;
+  --mobile-scale-ratio: 1.05;
+  --mobile-line-height: 1.45;
+  --mobile-heading-line-height: 1.12;
+  --mobile-gutter: 18px;
+  --elevation-1: 0 6px 18px rgba(11, 14, 20, 0.06);
+  --elevation-2: 0 10px 30px rgba(11, 14, 20, 0.08);
+  --soft-glow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  --action-touch-size: 44px;
+  --motion-duration-short: 180ms;
+  --motion-duration-regular: 320ms;
+  --motion-ease: cubic-bezier(.2, .9, .26, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base responsive typographic rhythm using rems */
+html {
+  font-size: clamp(14px, calc(12px + 0.6vw), 16px);
+}
+
+/* Mobile-first body tuning */
+body {
+  line-height: var(--mobile-line-height);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 8s linear infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Make global animation timings more refined on mobile */
+@media (max-width: 640px) {
+  .animate-fade-in-up {
+    animation-duration: var(--motion-duration-regular);
+    animation-timing-function: var(--motion-ease);
+  }
+}
+
+
+
+@layer base {
+  :root {
+    --background: 220 14% 96%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 99%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 0 0% 6%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 220 12% 93%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 220 12% 92%;
+    --muted-foreground: 0 0% 36%;
+    --accent: 220 12% 93%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 10% 85%;
+    --input: 220 10% 85%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Reduce glass blur on mobile only */
+@media (max-width: 640px) {
+  [data-slot="button"]>div:first-child {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+/* Interactive elements: tap highlight removal */
+button,
+a,
+.btn,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Gentle active feedback */
+button:active,
+a:active,
+[role="button"]:active {
+  transform: translateY(1px) scale(0.998);
+  opacity: 0.98;
+}
+
+/* Subtle, luxury-grade elevations for cards and surfaces (mobile) */
+.card,
+.project-card,
+.hero-card,
+.image-card {
+  box-shadow: var(--elevation-1);
+  transition: box-shadow var(--motion-duration-regular) var(--motion-ease), transform var(--motion-duration-regular) var(--motion-ease);
+}
+
+@media (max-width: 640px) {
+
+  .card:hover,
+  .project-card:hover {
+    box-shadow: var(--elevation-2);
+  }
+}
+
+/* Improve image stability, rendering and reduce CLS for next/image using fill: ensure parent provides intrinsic ratio */
+/* Keep selectors generic and non-invasive */
+.aspect-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Next image wrapper adjustments */
+/* Ensure object-fit is smooth and images are GPU-accelerated */
+.object-cover,
+.object-contain {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Next.js Image wrapper class fixes to avoid jank */
+:where(.next-image, .next-image-wrapper, .next-img) {
+  display: block;
+}
+
+/* Reduce layout shifts from decorative images by reserving space */
+img[loading="lazy"] {
+  will-change: transform, opacity;
+}
+
+/* Accessibility: larger focus rings on mobile for high contrast */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.06);
+  outline-offset: 3px;
+}
+
+/* Respect reduced motion — shorten instead of removing entirely for quick perceived performance */
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-fade-in-up,
+  .animate-gradient-x,
+  .animate-shimmer {
+    animation-duration: 150ms !important;
+    transition-duration: 120ms !important;
+  }
+}
+
+/* Responsive typographic rhythm — soft defaults, no !important */
+@media (max-width: 640px) {
+  :root {
+    --radius: 0.5rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.1;
+  }
+
+  p,
+  li {
+    font-size: clamp(14px, 3.8vw, 16px);
+    line-height: 1.55;
+  }
+}
+
+/* Tablet fluid type */
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  p,
+  li {
+    font-size: clamp(15px, 1.8vw, 17px);
+    line-height: 1.6;
+  }
+}
+
+/* Large screens — cap max width for readability */
+@media (min-width: 1441px) {
+  .max-w-7xl {
+    max-width: 1400px;
+  }
+}
+
+/* Enhanced typography for collision falling text */
+.word-spacing {
+  word-spacing: -0.05em;
+}
+
+/* Improved text rendering */
+.collision-falling-text-container {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fluid typography using CSS clamp */
+.fluid-heading {
+  /* Fluid scaling: min 22px, preferred 4.5vw, max 34px */
+  font-size: clamp(22px, 4.5vw, 34px);
+  letter-spacing: 0.4px;
+  line-height: 1.18;
+}
+
+/* Better line height for large text */
+@media (min-width: 768px) {
+  .collision-falling-text-container {
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Responsive font sizing */
+@media (max-width: 640px) {
+  .collision-falling-text-container {
+    word-break: normal;
+    hyphens: none;
+  }
+}
+
+/* Ensure no layout shift */
+.collision-falling-text-container {
+  contain: layout style;
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* WCAG 2.1 — Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

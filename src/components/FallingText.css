@@ -1,0 +1,31 @@
+.falling-text-container {
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    /* Ensure it has some height initially if content is delayed */
+}
+
+.falling-text-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.falling-text-target {
+    position: relative;
+    z-index: 10;
+}
+
+.word {
+    display: inline-block;
+    white-space: pre;
+    will-change: transform;
+    pointer-events: auto;
+    /* Allow interactions if needed */
+    margin: 0;
+    line-height: 1;
+}
