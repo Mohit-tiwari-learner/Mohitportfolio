@@ -4,7 +4,8 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { WebGLShader } from "@/components/ui/web-gl-shader";
+import dynamic from "next/dynamic";
+const WebGLShader = dynamic(() => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader), { ssr: false });
 import { Download } from "lucide-react";
 
 export function Hero() {

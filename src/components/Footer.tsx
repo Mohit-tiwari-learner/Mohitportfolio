@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUp, Mail, Phone, Linkedin, Github, Twitter, Instagram, ArrowRight } from "lucide-react";
-import { WebGLShader } from "@/components/ui/web-gl-shader";
+import dynamic from "next/dynamic";
+const WebGLShader = dynamic(() => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader), { ssr: false });
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { ContactForm } from "@/components/ContactForm";
-import Spline from '@splinetool/react-spline';
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
