@@ -9,8 +9,8 @@ export function Contact() {
     const [isFormOpen, setIsFormOpen] = useState(false);
 
     const socialLinks = [
-        { icon: Twitter, href: "#", label: "Twitter" },
-        { icon: Instagram, href: "#", label: "Instagram" },
+        { icon: Twitter, href: "https://x.com/Mohit_4_you", label: "Twitter" },
+        { icon: Instagram, href: "https://www.instagram.com/mohit____tiwari______/?hl=en", label: "Instagram" },
         { icon: Linkedin, href: "https://linkedin.com/in/mohit-tiwari-426598338", label: "LinkedIn" },
         { icon: Github, href: "https://github.com/username", label: "GitHub" }
     ];

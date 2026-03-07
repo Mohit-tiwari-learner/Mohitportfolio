@@ -12,8 +12,8 @@ export function Footer() {
     const [isFormOpen, setIsFormOpen] = useState(false);
 
     const socialLinks = [
-        { icon: Twitter, href: "#", label: "TWITTER" },
-        { icon: Instagram, href: "#", label: "INSTAGRAM" },
+        { icon: Twitter, href: "https://x.com/Mohit_4_you", label: "TWITTER" },
+        { icon: Instagram, href: "https://www.instagram.com/mohit____tiwari______/?hl=en", label: "INSTAGRAM" },
         { icon: Linkedin, href: "https://linkedin.com/in/mohit-tiwari-426598338", label: "LINKEDIN" },
         { icon: Github, href: "https://github.com/username", label: "GITHUB" },
     ];
