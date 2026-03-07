@@ -124,30 +124,30 @@ function ProjectGallery({
                     className="fixed inset-0 z-[200] flex flex-col items-center justify-center p-4 md:p-8"
                     role="dialog" aria-modal="true" aria-label={`${projectTitle} Gallery`}
                 >
-                    <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" />
+                    <div className="absolute inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-xl transition-colors duration-700" />
                     <div className="relative w-full max-w-6xl flex items-center justify-between mb-4 z-10" onClick={(e) => e.stopPropagation()}>
                         <div>
-                            <p className="text-white/50 text-xs uppercase tracking-widest">Gallery</p>
-                            <h3 className="text-white font-bold text-lg">{projectTitle}</h3>
+                            <p className="text-black/50 dark:text-white/50 text-xs uppercase tracking-widest transition-colors duration-700">Gallery</p>
+                            <h3 className="text-black dark:text-white font-bold text-lg transition-colors duration-700">{projectTitle}</h3>
                         </div>
                         <div className="flex items-center gap-3">
-                            <span className="text-white/40 text-sm">{currentIndex + 1} / {images.length}</span>
-                            <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all border border-white/10 text-white" aria-label="Close Gallery">
+                            <span className="text-black/40 dark:text-white/40 text-sm transition-colors duration-700">{currentIndex + 1} / {images.length}</span>
+                            <button onClick={onClose} className="p-2 bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 rounded-xl transition-all border border-black/10 dark:border-white/10 text-black dark:text-white" aria-label="Close Gallery">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
                     </div>
                     <div className="relative w-full max-w-6xl flex items-center justify-center z-10" onClick={(e) => e.stopPropagation()}>
                         {images.length > 1 && (
-                            <button onClick={prevImage} className="absolute left-0 md:-left-14 z-10 p-3 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all border border-white/10 backdrop-blur-sm" aria-label="Previous Image">
+                            <button onClick={prevImage} className="absolute left-0 md:-left-14 z-10 p-3 bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 rounded-xl text-black dark:text-white transition-all border border-black/10 dark:border-white/10 backdrop-blur-sm" aria-label="Previous Image">
                                 <ChevronLeft className="w-6 h-6" />
                             </button>
                         )}
-                        <motion.div key={currentIndex} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }} className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+                        <motion.div key={currentIndex} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }} className="relative w-full aspect-video rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl bg-gray-100 dark:bg-black transition-colors duration-700">
                             <Image src={images[currentIndex]} alt={`${projectTitle} — Screenshot ${currentIndex + 1}`} fill className="object-contain" sizes="(max-width: 768px) 100vw, 90vw" priority />
                         </motion.div>
                         {images.length > 1 && (
-                            <button onClick={nextImage} className="absolute right-0 md:-right-14 z-10 p-3 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all border border-white/10 backdrop-blur-sm" aria-label="Next Image">
+                            <button onClick={nextImage} className="absolute right-0 md:-right-14 z-10 p-3 bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 rounded-xl text-black dark:text-white transition-all border border-black/10 dark:border-white/10 backdrop-blur-sm" aria-label="Next Image">
                                 <ChevronRight className="w-6 h-6" />
                             </button>
                         )}
@@ -155,7 +155,7 @@ function ProjectGallery({
                     {images.length > 1 && (
                         <div className="relative flex gap-2 mt-6 z-10 flex-wrap justify-center" onClick={(e) => e.stopPropagation()}>
                             {images.map((img, idx) => (
-                                <button key={idx} onClick={() => setCurrentIndex(idx)} className={`relative w-14 h-10 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${idx === currentIndex ? "border-white opacity-100 scale-110" : "border-white/20 opacity-40 hover:opacity-70"}`} aria-label={`Go to image ${idx + 1}`}>
+                                <button key={idx} onClick={() => setCurrentIndex(idx)} className={`relative w-14 h-10 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${idx === currentIndex ? "border-black dark:border-white opacity-100 scale-110" : "border-black/20 dark:border-white/20 opacity-40 hover:opacity-70"}`} aria-label={`Go to image ${idx + 1}`}>
                                     <Image src={img} alt="" fill className="object-cover" sizes="56px" loading="lazy" decoding="async" />
                                 </button>
                             ))}
@@ -224,20 +224,16 @@ function SideProgress({ count, sectionProgress }: { count: number; sectionProgre
                     <motion.span
                         animate={{ opacity: active === i ? 1 : 0, x: active === i ? 0 : 8 }}
                         transition={{ duration: 0.35 }}
-                        className="text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap"
+                        className="text-[10px] font-bold uppercase tracking-widest text-black dark:text-white whitespace-nowrap transition-colors duration-700"
                     >
                         {String(i + 1).padStart(2, "0")}
                     </motion.span>
                     {/* Dot */}
                     <motion.div
-                        animate={{
-                            width: active === i ? 28 : 6,
-                            backgroundColor: active === i
-                                ? `rgb(${p.accentColor})`
-                                : "rgba(255,255,255,0.2)",
-                        }}
+                        animate={{ width: active === i ? 28 : 6 }}
+                        style={{ backgroundColor: active === i ? `rgb(${p.accentColor})` : undefined }}
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="h-[3px] rounded-full"
+                        className={`h-[3px] rounded-full transition-colors duration-500 ${active === i ? "" : "bg-black/20 dark:bg-white/20"}`}
                     />
                 </div>
             ))}
@@ -394,15 +390,14 @@ function StickyCard({
                     />
 
                     {/* ── Card Shell with enhanced backdrop blur ── */}
-                    <div className="relative rounded-3xl overflow-hidden backdrop-blur-xl" style={{
-                        backgroundColor: "rgba(14, 14, 14, 0.85)",
+                    <div className="relative rounded-3xl overflow-hidden backdrop-blur-xl bg-white/85 dark:bg-[#0e0e0e]/85 transition-colors duration-700" style={{
                         backdropFilter: "blur(12px)"
                     }}>
 
                         {/* ── Image Area ── */}
                         <div
                             className="relative overflow-hidden cursor-pointer"
-                            style={{ height: "clamp(260px, 52vh, 560px)" }}
+                            style={{ height: "clamp(200px, 40vh, 560px)" }}
                             onClick={() => project.gallery && setIsGalleryOpen(true)}
                         >
                             {/* Parallax image wrapper */}
@@ -421,8 +416,8 @@ function StickyCard({
                             </motion.div>
 
                             {/* Enhanced multi-layer gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/30 to-transparent z-10" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#0e0e0e]/80 via-transparent to-transparent z-10" />
+                            <div className="absolute inset-0 transition-colors duration-700 bg-gradient-to-t from-white via-white/30 dark:from-[#0e0e0e] dark:via-[#0e0e0e]/30 to-transparent z-10" />
+                            <div className="absolute inset-0 transition-colors duration-700 bg-gradient-to-r from-white/80 via-transparent dark:from-[#0e0e0e]/80 dark:via-transparent to-transparent z-10" />
 
                             {/* Light leak effect - animates on hover */}
                             <div
@@ -466,7 +461,7 @@ function StickyCard({
                                 transition={{ duration: 0.4 }}
                             >
                                 <span
-                                    className="text-[70px] md:text-[110px] lg:text-[140px] font-black text-transparent bg-clip-text transition-all duration-700"
+                                    className="text-[50px] md:text-[110px] lg:text-[140px] font-black text-transparent bg-clip-text transition-all duration-700"
                                     style={{
                                         lineHeight: 1,
                                         backgroundImage: `linear-gradient(135deg, rgba(${rgb},0.15), rgba(${rgb},0.05))`
@@ -532,18 +527,15 @@ function StickyCard({
                                 transition={{ duration: 0.6, delay: 0.1 }}
                             >
                                 <h3
-                                    className="text-[clamp(1.8rem,4.5vw,3.5rem)] font-black text-white leading-[1.05] tracking-tight"
+                                    className="text-[clamp(1.4rem,4.5vw,3.5rem)] font-black leading-[1.05] tracking-tight text-transparent bg-clip-text text-black dark:text-white transition-colors duration-700"
                                     style={{
-                                        backgroundImage: `linear-gradient(135deg, white 0%, rgba(${rgb}, 0.8) 100%)`,
-                                        backgroundClip: "text",
-                                        WebkitBackgroundClip: "text",
-                                        WebkitTextFillColor: "transparent",
-                                    } as React.CSSProperties}
+                                        backgroundImage: `linear-gradient(135deg, currentColor 0%, rgba(${rgb}, 0.8) 100%)`,
+                                    }}
                                 >
                                     {project.title}
                                 </h3>
                                 <p
-                                    className="text-white/50 text-sm leading-relaxed md:text-right md:max-w-[38%]"
+                                    className="text-black/60 dark:text-white/50 transition-colors duration-700 text-sm leading-relaxed md:text-right md:max-w-[38%]"
                                 >
                                     {project.tagline}
                                 </p>
@@ -551,7 +543,7 @@ function StickyCard({
 
                             {/* Description — reveal third */}
                             <motion.p
-                                className="text-white/45 text-sm md:text-base leading-relaxed max-w-2xl mb-6"
+                                className="text-black/60 dark:text-white/45 transition-colors duration-700 text-sm md:text-base leading-relaxed max-w-2xl mb-6"
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
@@ -580,12 +572,7 @@ function StickyCard({
                                             whileHover={{ scale: 1.08, y: -2 }}
                                         >
                                             <motion.span
-                                                className="px-4 py-2 bg-white/[0.06] rounded-full text-xs font-medium border border-white/[0.12] text-white/50 hover:text-white/90 backdrop-blur-sm transition-all duration-200 cursor-default inline-block"
-                                                whileHover={{
-                                                    backgroundColor: "rgba(255,255,255,0.12)",
-                                                    borderColor: "rgba(255,255,255,0.2)",
-                                                    boxShadow: `inset 0 0 20px rgba(255,255,255,0.05)`,
-                                                }}
+                                                className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-medium backdrop-blur-sm transition-all duration-200 cursor-default inline-block bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.1] dark:border-white/[0.12] text-black/60 dark:text-white/50 hover:bg-black/[0.08] dark:hover:bg-white/[0.12] hover:border-black/[0.2] dark:hover:border-white/[0.2] hover:text-black/90 dark:hover:text-white/90"
                                             >
                                                 {t}
                                             </motion.span>
@@ -625,15 +612,7 @@ function StickyCard({
                                                 href={project.github}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="group/github inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border border-white/20 text-white/70 hover:text-white backdrop-blur-sm transition-all duration-300"
-                                                onMouseEnter={(e: any) => {
-                                                    (e.currentTarget as any).style.borderColor = "rgba(255,255,255,0.4)";
-                                                    (e.currentTarget as any).style.backgroundColor = "rgba(255,255,255,0.08)";
-                                                }}
-                                                onMouseLeave={(e: any) => {
-                                                    (e.currentTarget as any).style.borderColor = "rgba(255,255,255,0.2)";
-                                                    (e.currentTarget as any).style.backgroundColor = "transparent";
-                                                }}
+                                                className="group/github inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border backdrop-blur-sm transition-all duration-300 border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 hover:border-black/40 dark:hover:border-white/40 hover:text-black dark:hover:text-white"
                                             >
                                                 <Github className="w-4 h-4 transition-transform group-hover/github:rotate-12" />
                                                 Code
@@ -676,18 +655,20 @@ function StickyCard({
                             }}
                         />
                     </div>
-                </motion.div>
-            </div>
+                </motion.div >
+            </div >
 
             {/* Gallery Modal */}
-            {project.gallery && (
-                <ProjectGallery
-                    images={project.gallery}
-                    isOpen={isGalleryOpen}
-                    onClose={() => setIsGalleryOpen(false)}
-                    projectTitle={project.title}
-                />
-            )}
+            {
+                project.gallery && (
+                    <ProjectGallery
+                        images={project.gallery}
+                        isOpen={isGalleryOpen}
+                        onClose={() => setIsGalleryOpen(false)}
+                        projectTitle={project.title}
+                    />
+                )
+            }
         </>
     );
 }
@@ -714,7 +695,7 @@ function SectionHeader() {
                     animate={isInView ? { scaleX: 1 } : {}}
                     transition={{ duration: 0.8, delay: 0.1 }}
                 />
-                <span className="bg-gradient-to-r from-red-500 via-red-400 to-orange-400 bg-clip-text text-transparent font-semibold">Selected Works</span>
+                <span className="text-red-500 dark:bg-gradient-to-r dark:from-red-500 dark:via-red-400 dark:to-orange-400 dark:bg-clip-text dark:text-transparent font-semibold">Selected Works</span>
             </motion.p>
 
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -722,13 +703,7 @@ function SectionHeader() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter leading-[0.88]"
-                    style={{
-                        backgroundImage: "linear-gradient(135deg, white 0%, rgba(255,255,255,0.7) 100%)",
-                        backgroundClip: "text",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                    } as React.CSSProperties}
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter leading-[0.88] text-transparent bg-clip-text transition-colors duration-700 bg-gradient-to-br from-black/90 to-black/60 dark:from-white dark:to-white/70"
                 >
                     Projects
                 </motion.h2>
@@ -736,7 +711,7 @@ function SectionHeader() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-white/45 text-sm md:text-base max-w-xs leading-relaxed md:text-right"
+                    className="text-black/60 dark:text-white/45 transition-colors duration-700 text-sm md:text-base max-w-xs leading-relaxed md:text-right"
                 >
                     A curated selection of projects that solve real&#8209;world problems through data &amp; intelligent systems.
                 </motion.p>
@@ -758,15 +733,15 @@ function SectionHeader() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 1.2, delay: 1 }}
-                className="mt-12 flex items-center gap-3 text-white/45"
+                className="mt-12 flex items-center gap-3 text-black/50 dark:text-white/45 transition-colors duration-700"
             >
                 <motion.div
                     className="flex flex-col gap-1"
                     animate={isInView ? { y: [0, 8, 0] } : {}}
                     transition={{ duration: 1.8, repeat: Infinity }}
                 >
-                    <div className="w-5 h-px bg-gradient-to-r from-white/60 via-white/40 to-transparent" />
-                    <div className="w-3 h-px bg-gradient-to-r from-white/40 via-white/20 to-transparent" />
+                    <div className="w-5 h-px transition-colors duration-700 bg-gradient-to-r from-black/60 via-black/40 to-transparent dark:from-white/60 dark:via-white/40" />
+                    <div className="w-3 h-px transition-colors duration-700 bg-gradient-to-r from-black/40 via-black/20 to-transparent dark:from-white/40 dark:via-white/20" />
                 </motion.div>
                 <span className="text-[10px] tracking-[0.2em] uppercase font-medium">Scroll to explore</span>
             </motion.div>
@@ -788,11 +763,11 @@ export function Projects() {
     });
 
     return (
-        <section id="projects" className="relative" style={{ backgroundColor: "#0a0a0a" }}>
+        <section id="projects" className="relative transition-colors duration-700 bg-white dark:bg-[#0a0a0a]">
             {/* Border lines */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-                <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+                <div className="absolute top-0 inset-x-0 h-px transition-colors duration-700 bg-gradient-to-r from-transparent via-black/10 dark:via-white/[0.06] to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 h-px transition-colors duration-700 bg-gradient-to-r from-transparent via-black/10 dark:via-white/[0.06] to-transparent" />
             </div>
 
             {/* Section heading */}

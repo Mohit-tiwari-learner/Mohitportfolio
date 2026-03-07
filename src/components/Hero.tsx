@@ -18,11 +18,11 @@ export function Hero() {
                     titleComponent={
                         <>
                             <div className="flex flex-col items-center">
-                                <span className="text-xs sm:text-sm md:text-xl font-medium text-muted-foreground tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-2 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
+                                <span className="text-[10px] sm:text-sm md:text-xl font-medium text-muted-foreground tracking-widest sm:tracking-[0.2em] uppercase mb-2 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
                                     Mohit Tiwari
                                 </span>
-                                <h1 className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[7.5rem] font-black leading-[0.85] text-center tracking-tighter text-[#4b4b4b] dark:text-foreground mb-6 sm:mb-8 md:mb-10">
-                                    Data Scientist <span className="text-[#6b6b6b] dark:text-muted-foreground/60 font-thin px-2">&</span> <br />
+                                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[7.5rem] font-black leading-[1.15] sm:leading-[0.85] text-center tracking-tight sm:tracking-tighter text-[#4b4b4b] dark:text-foreground mb-6 sm:mb-8 md:mb-10">
+                                    Data Scientist <span className="text-[#6b6b6b] dark:text-muted-foreground/60 font-thin px-2">&</span> <br className="hidden sm:block" />
                                     <span className="bg-clip-text text-transparent bg-[linear-gradient(110deg,#808080,35%,#e5e5e5,50%,#808080,65%,#808080)] dark:bg-[linear-gradient(110deg,hsl(var(--foreground)),45%,hsl(var(--muted-foreground)),55%,hsl(var(--foreground)))] bg-[length:250%_100%] animate-shimmer drop-shadow-sm">
                                         ML Engineer
                                     </span>
@@ -40,7 +40,7 @@ export function Hero() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                             >
-                                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-foreground leading-[0.9] mb-3 sm:mb-4">
+                                <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-foreground leading-[0.9] mb-3 sm:mb-4">
                                     DATA<br />
                                     DRIVEN<br />
                                     <span className="text-muted-foreground/70">INSIGHTS</span>
@@ -50,12 +50,12 @@ export function Hero() {
                                 </p>
 
                                 {/* CTA row: View Projects + Resume side by side */}
-                                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                                    <a href="#projects" className="inline-block group">
+                                <div className="flex flex-row items-stretch sm:items-center gap-2 sm:gap-4 justify-center sm:justify-start">
+                                    <a href="#projects" className="inline-block group w-full sm:w-auto">
                                         <LiquidButton
                                             variant="default"
-                                            size="lg"
-                                            className="text-foreground font-semibold flex items-center gap-2"
+                                            size="default"
+                                            className="w-full sm:w-auto text-foreground font-semibold flex items-center justify-center gap-2"
                                         >
                                             View Projects
                                             <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -64,12 +64,12 @@ export function Hero() {
                                     <a
                                         href="/resume_pf.pdf"
                                         download="Mohit_Tiwari_Resume.pdf"
-                                        className="inline-block group"
+                                        className="inline-block group w-full sm:w-auto"
                                     >
                                         <LiquidButton
                                             variant="default"
-                                            size="lg"
-                                            className="text-foreground font-semibold"
+                                            size="default"
+                                            className="w-full sm:w-auto text-foreground font-semibold flex items-center justify-center"
                                         >
                                             <span className="flex items-center gap-2">
                                                 Resume
@@ -82,7 +82,7 @@ export function Hero() {
                         </div>
 
                         {/* Right Content: Portrait */}
-                        <div className="flex-1 h-full w-full relative flex items-end justify-center md:justify-end overflow-hidden">
+                        <div className="hidden md:flex flex-1 h-full w-full relative items-end justify-center md:justify-end overflow-hidden">
                             <motion.div
                                 initial={{ opacity: 0, scale: 1.1 }}
                                 animate={{ opacity: 1, scale: 1 }}

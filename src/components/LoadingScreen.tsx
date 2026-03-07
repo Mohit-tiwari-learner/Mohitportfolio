@@ -2,16 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/*
- * Premium preloader inspired by veronicazubakova.com
- * Features:
- *   – Dark background with large animated counter (0 → 100)
- *   – Ultra-thin horizontal progress line
- *   – Elegant staggered text reveal
- *   – Two-panel vertical curtain split exit
- *   – Scroll-locked during loading
- *   – Fully responsive, no layout shift
- */
+
 
 const WORDS = ["Creating", "experience"];
 
@@ -191,11 +182,11 @@ export function LoadingScreen() {
                             }}
                         >
                             <video
-                                src="/loading/0220.mp4"
                                 autoPlay
                                 muted
                                 loop
                                 playsInline
+                                preload="auto"
                                 style={{
                                     width: "100%",
                                     height: "auto",
@@ -204,7 +195,9 @@ export function LoadingScreen() {
                                     background: "#000",
                                     mixBlendMode: "screen",
                                 }}
-                            />
+                            >
+                                <source src="/loading/0220.mp4" type="video/mp4" />
+                            </video>
                         </motion.div>
 
                         {/* Counter */}

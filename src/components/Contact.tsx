@@ -28,7 +28,7 @@ export function Contact() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground mb-6">
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-foreground mb-4 sm:mb-6">
                             Let&apos;s build <br />
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 animate-gradient-x bg-[length:200%_auto]">
                                 something epic.
@@ -52,8 +52,8 @@ export function Contact() {
 
                             <LiquidButton
                                 variant="default"
-                                size="xl"
-                                className="relative bg-gradient-to-br from-foreground/90 to-foreground text-background font-bold text-lg px-8 py-6 rounded-full group-hover:shadow-[0_0_60px_20px_rgba(139,92,246,0.3)] transition-all duration-500 group-hover:scale-105 backdrop-blur-sm border border-border/20"
+                                size="default"
+                                className="relative bg-gradient-to-br from-foreground/90 to-foreground text-background font-bold text-base md:text-lg px-6 md:px-8 py-4 md:py-6 rounded-full group-hover:shadow-[0_0_60px_20px_rgba(139,92,246,0.3)] transition-all duration-500 group-hover:scale-105 backdrop-blur-sm border border-border/20"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
                                     Let&apos;s Connect
@@ -90,11 +90,11 @@ export function Contact() {
                     className="w-full max-w-md space-y-6"
                 >
                     <a href="mailto:mohit200409tiwari@gmail.com" className="block group" aria-label="Send email">
-                        <div className="p-8 rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-500 group-hover:-translate-y-1 relative overflow-hidden">
+                        <div className="p-5 md:p-8 rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-500 group-hover:-translate-y-1 relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/5 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                            <div className="flex items-center gap-6">
-                                <div className="p-4 rounded-xl bg-violet-500/10 text-violet-500">
-                                    <Mail size={28} />
+                            <div className="flex items-center gap-4 md:gap-6">
+                                <div className="p-3 md:p-4 rounded-xl bg-violet-500/10 text-violet-500">
+                                    <Mail className="w-5 h-5 md:w-7 md:h-7" />
                                 </div>
                                 <div>
                                     <p className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wide">Email Me</p>
@@ -106,10 +106,10 @@ export function Contact() {
                         </div>
                     </a>
 
-                    <div className="p-8 rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg relative overflow-hidden">
-                        <div className="flex items-center gap-6">
-                            <div className="p-4 rounded-xl bg-emerald-500/10 text-emerald-500">
-                                <Phone size={28} />
+                    <div className="p-5 md:p-8 rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg relative overflow-hidden">
+                        <div className="flex items-center gap-4 md:gap-6">
+                            <div className="p-3 md:p-4 rounded-xl bg-emerald-500/10 text-emerald-500">
+                                <Phone className="w-5 h-5 md:w-7 md:h-7" />
                             </div>
                             <div>
                                 <p className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wide">Call Me</p>

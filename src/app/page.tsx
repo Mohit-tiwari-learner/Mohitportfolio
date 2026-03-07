@@ -4,9 +4,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { SectionDivider } from "@/components/SectionDivider";
 import { About } from "@/components/About";
-import { Projects } from "@/components/Projects";
+import { FeaturedWorkSection } from "@/components/FeaturedWork/FeaturedWorkSection";
 import { Blog } from "@/components/Blog";
-import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
@@ -22,12 +21,11 @@ export default function Home() {
                     <About />
                 </section>
                 <section id="projects">
-                    <Projects />
+                    <FeaturedWorkSection />
                 </section>
                 <section id="blog">
                     <Blog />
                 </section>
-                <Contact />
                 <Footer />
             </main>
         </>

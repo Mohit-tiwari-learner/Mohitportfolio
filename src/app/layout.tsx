@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import SplashCursor from "@/components/ui/splash-cursor";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
     title: "Mohit Tiwari — Data Scientist & ML Engineer",
@@ -41,17 +42,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    {children}
-                    <SplashCursor />
-                </ThemeProvider>
+        <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
+            <body className="font-sans antialiased">
+                <SmoothScroll>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        {children}
+                        <SplashCursor />
+                    </ThemeProvider>
+                </SmoothScroll>
             </body>
         </html>
     );

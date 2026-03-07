@@ -25,47 +25,29 @@ interface FormErrors {
 
 const STORAGE_KEY = "contact_form_draft";
 
-// Sound effects helper
 const playSound = (type: 'focus' | 'success' | 'click' | 'error') => {
-    const audioContent = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContent.createOscillator();
-    const gainNode = audioContent.createGain();
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContent.destination);
+    const now = ctx.currentTime;
+    const settings = {
+        focus: { type: 'sine', f1: 440, f2: 880, g1: 0.02, dur: 0.1 },
+        click: { type: 'triangle', f1: 200, f2: 200, g1: 0.05, dur: 0.05 },
+        success: { type: 'sine', f1: 440, f2: 880, g1: 0.05, dur: 0.5, ramp: 'linear' },
+        error: { type: 'sawtooth', f1: 150, f2: 100, g1: 0.05, dur: 0.3, ramp: 'linear' }
+    }[type];
 
-    if (type === 'focus') {
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(440, audioContent.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(880, audioContent.currentTime + 0.1);
-        gainNode.gain.setValueAtTime(0.02, audioContent.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContent.currentTime + 0.1);
-        oscillator.start();
-        oscillator.stop(audioContent.currentTime + 0.1);
-    } else if (type === 'click') {
-        oscillator.type = 'triangle'; // Click sound
-        oscillator.frequency.setValueAtTime(200, audioContent.currentTime);
-        gainNode.gain.setValueAtTime(0.05, audioContent.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContent.currentTime + 0.05);
-        oscillator.start();
-        oscillator.stop(audioContent.currentTime + 0.05);
-    } else if (type === 'success') {
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(440, audioContent.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(880, audioContent.currentTime + 0.2);
-        gainNode.gain.setValueAtTime(0.05, audioContent.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContent.currentTime + 0.5);
-        oscillator.start();
-        oscillator.stop(audioContent.currentTime + 0.5);
-    } else if (type === 'error') {
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(150, audioContent.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(100, audioContent.currentTime + 0.2);
-        gainNode.gain.setValueAtTime(0.05, audioContent.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContent.currentTime + 0.3);
-        oscillator.start();
-        oscillator.stop(audioContent.currentTime + 0.3);
-    }
+    if (!settings) return;
+    osc.type = settings.type as OscillatorType;
+    osc.frequency.setValueAtTime(settings.f1, now);
+    if (settings.ramp === 'linear') osc.frequency.linearRampToValueAtTime(settings.f2, now + (settings.dur > 0.2 ? 0.2 : settings.dur));
+    else osc.frequency.exponentialRampToValueAtTime(settings.f2, now + 0.1);
+
+    gain.gain.setValueAtTime(settings.g1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + settings.dur);
+
+    osc.start(now); osc.stop(now + settings.dur);
 };
 
 

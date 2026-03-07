@@ -15,8 +15,8 @@
   --mobile-line-height: 1.45;
   --mobile-heading-line-height: 1.12;
   --mobile-gutter: 18px;
-  --elevation-1: 0 6px 18px rgba(11, 14, 20, 0.06);
-  --elevation-2: 0 10px 30px rgba(11, 14, 20, 0.08);
+  --elevation-1: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --elevation-2: 0 8px 30px rgba(0, 0, 0, 0.06);
   --soft-glow: 0 6px 24px rgba(0, 0, 0, 0.06);
   --action-touch-size: 44px;
   --motion-duration-short: 180ms;
@@ -302,8 +302,8 @@ a:focus-visible {
 
 /* Fluid typography using CSS clamp */
 .fluid-heading {
-  /* Fluid scaling: min 22px, preferred 4.5vw, max 34px */
-  font-size: clamp(22px, 4.5vw, 34px);
+  /* Fluid scaling: min 18px, preferred 5vw, max 36px */
+  font-size: clamp(18px, 5vw, 36px);
   letter-spacing: 0.4px;
   line-height: 1.18;
 }

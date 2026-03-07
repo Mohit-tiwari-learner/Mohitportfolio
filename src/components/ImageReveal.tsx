@@ -202,12 +202,12 @@ export function ImageReveal({
 
             {/* Hover hint text */}
             <motion.div
-                className="absolute bottom-4 left-0 right-0 text-center pointer-events-none"
+                className="absolute bottom-1 md:bottom-4 left-0 right-0 text-center pointer-events-none"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isHovering ? 0 : 0.6 }}
                 transition={{ duration: 0.4, delay: 0.8 }}
             >
-                <span className="text-sm md:text-xs tracking-[0.2em] uppercase text-white/80 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                <span className="text-[10px] sm:text-sm md:text-xs tracking-[0.2em] uppercase text-white/80 bg-black/40 backdrop-blur-sm px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
                     {isMobile ? "Touch to reveal" : "Hover to reveal"}
                 </span>
             </motion.div>

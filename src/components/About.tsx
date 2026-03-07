@@ -56,7 +56,7 @@ export function About() {
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 sm:gap-14 lg:gap-20 items-center relative z-10 w-full">
 
                 {/* ─── Left Column: Text ─── */}
-                <div className="space-y-8 sm:space-y-10 md:space-y-12 order-2 lg:order-1">
+                <div className="space-y-6 sm:space-y-10 md:space-y-12 order-2 lg:order-1">
 
                     {/* Section label */}
                     <motion.div
@@ -74,7 +74,7 @@ export function About() {
 
                     <CollisionFallingText
                         text="I collaborate with businesses, brands, and entrepreneurs to create digital products and achieve their goals."
-                        className="font-black tracking-tight text-foreground leading-[1.18] fluid-heading break-keep [word-break:keep-all]"
+                        className="font-semibold sm:font-bold md:font-black tracking-tight text-foreground leading-[1.18] fluid-heading break-keep [word-break:keep-all]"
                         navbarHeight={80}
                         highlightedWords={["businesses", "brands", "entrepreneurs", "digital products"]}
                         onCollision={() => console.log("Text collision detected!")}
@@ -85,7 +85,7 @@ export function About() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-10%" }}
                         transition={{ duration: 1, delay: 0.15, ease: smoothEasing }}
-                        className="space-y-5 text-base sm:text-lg md:text-xl font-medium leading-relaxed max-w-xl text-muted-foreground"
+                        className="space-y-5 text-sm sm:text-lg md:text-xl font-medium leading-relaxed sm:leading-relaxed max-w-xl text-muted-foreground"
                     >
                         <p>
                             I create unique experiences that transform how users interact with the digital world. Each project is an opportunity to blend{" "}
@@ -124,14 +124,14 @@ export function About() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.6, duration: 0.8 }}
-                        className="flex gap-8 sm:gap-12 pt-4 border-t border-border/40"
+                        className="flex gap-4 sm:gap-12 pt-4 border-t border-border/40"
                     >
                         {stats.map((stat, i) => (
-                            <div key={i} className="text-center sm:text-left">
-                                <div className="text-2xl sm:text-3xl font-black text-foreground tracking-tight">
+                            <div key={i} className="text-center sm:text-left flex-1 sm:flex-none">
+                                <div className="text-lg sm:text-3xl font-black text-foreground tracking-tight">
                                     {stat.value}
                                 </div>
-                                <div className="text-xs sm:text-sm text-muted-foreground font-medium mt-1 uppercase tracking-wider">
+                                <div className="text-[10px] sm:text-sm text-muted-foreground font-medium mt-1 uppercase tracking-wider">
                                     {stat.label}
                                 </div>
                             </div>
@@ -146,7 +146,7 @@ export function About() {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="w-[260px] sm:w-[300px] md:w-[340px] lg:w-[380px]"
+                        className="w-[180px] sm:w-[300px] md:w-[340px] lg:w-[380px] mx-auto lg:mx-0"
                     >
                         <ImageReveal
                             parentImage="/abouthero.png"
