@@ -3,7 +3,8 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CollisionFallingText from "./CollisionFallingText";
+import dynamic from "next/dynamic";
+const CollisionFallingText = dynamic(() => import("./CollisionFallingText"), { ssr: false });
 import { ImageReveal } from "./ImageReveal";
 
 if (typeof window !== "undefined") {
@@ -43,7 +44,7 @@ export function About() {
 
     const stats = [
         { value: "10+", label: "Projects" },
-        { value: "2+", label: "Years Exp." },
+        { value: "1+", label: "Years Exp." },
         { value: "5+", label: "Tech Stack" },
     ];
 
