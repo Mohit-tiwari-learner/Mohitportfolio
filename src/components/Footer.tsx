@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 const WebGLShader = dynamic(() => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader), { ssr: false });
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { ContactForm } from "@/components/ContactForm";
-const Spline = dynamic(() => import('@splinetool/react-spline/next'), { ssr: false });
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
