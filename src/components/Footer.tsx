@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUp, Mail, Phone, Linkedin, Github, Twitter, Instagram, ArrowRight } from "lucide-react";
 import dynamic from "next/dynamic";
 const WebGLShader = dynamic(() => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader), { ssr: false });
-const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
+const Spline = dynamic(() => import('@splinetool/react-spline').then(mod => mod.default), { ssr: false });
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { ContactForm } from "@/components/ContactForm";
 

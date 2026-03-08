@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import dynamic from "next/dynamic";
-const SplashCursor = dynamic(() => import("@/components/ui/splash-cursor"), { ssr: false });
+import SplashCursor from "@/components/ui/splash-cursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
