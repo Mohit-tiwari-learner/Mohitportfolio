@@ -8,6 +8,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://masst-portfolio.vercel.app"),
     title: "Mohit Tiwari — Data Scientist & ML Engineer",
     description:
         "Portfolio of Mohit Tiwari. ML Engineer & Data Scientist building intelligent systems with Python, NLP, and data science. View projects, case studies, and experience.",
