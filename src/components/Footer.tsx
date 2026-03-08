@@ -11,10 +11,7 @@ const WebGLShader = dynamic(
     { ssr: false, loading: () => <div className="absolute inset-0 bg-black" /> }
 );
 
-const SplineRobot = dynamic(
-    () => import("@/components/SplineRobot"),
-    { ssr: false, loading: () => null }
-);
+
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
@@ -102,24 +99,7 @@ export function Footer() {
                     </motion.div>
                 </div>
 
-                {/* Right Side: Massive Spline 3D Robot Integration (Absolute) */}
-                <div className="absolute right-0 bottom-24 lg:bottom-12 w-full lg:w-1/2 h-[400px] lg:h-[500px] pointer-events-none z-10 flex flex-col items-center justify-center lg:justify-end">
-                    <motion.div
-                        className="absolute inset-0 flex items-center justify-center lg:justify-end pointer-events-auto mix-blend-screen"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.4 }}
-                    >
-                        {/* Overflow hidden container touching the right edge. Box size reduced but robot scaled up internally. */}
-                        <div className="relative w-[100%] h-[100%] lg:w-[80%] lg:h-[100%] -right-[15%] lg:-right-[15%] -bottom-[-10%] lg:-bottom-[10%] overflow-hidden pointer-events-none">
-                            {/* Scaling the canvas up heavily and pushing it up slightly for crop. */}
-                            <div className="absolute inset-0 scale-[1.0] md:scale-[2.1] -translate-x-[30%] md:-translate-x-[50%] -translate-y-[20%] md:-translate-y-[30%] pointer-events-auto">
-                                <SplineRobot scene="https://prod.spline.design/VigyHXd46nnSxAPl/scene.splinecode" />
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+
 
             </div>
 
