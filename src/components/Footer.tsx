@@ -3,10 +3,18 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUp, Mail, Phone, Linkedin, Github, Twitter, Instagram, ArrowRight } from "lucide-react";
 import dynamic from "next/dynamic";
-const WebGLShader = dynamic(() => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader), { ssr: false });
-const Spline = dynamic(() => import('@splinetool/react-spline').then(mod => mod.default), { ssr: false });
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { ContactForm } from "@/components/ContactForm";
+
+const WebGLShader = dynamic(
+    () => import("@/components/ui/web-gl-shader").then(m => m.WebGLShader),
+    { ssr: false, loading: () => <div className="absolute inset-0 bg-black" /> }
+);
+
+const SplineRobot = dynamic(
+    () => import("@/components/SplineRobot"),
+    { ssr: false, loading: () => null }
+);
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
@@ -107,7 +115,7 @@ export function Footer() {
                         <div className="relative w-[100%] h-[100%] lg:w-[80%] lg:h-[100%] -right-[15%] lg:-right-[15%] -bottom-[-10%] lg:-bottom-[10%] overflow-hidden pointer-events-none">
                             {/* Scaling the canvas up heavily and pushing it up slightly for crop. */}
                             <div className="absolute inset-0 scale-[1.0] md:scale-[2.1] -translate-x-[30%] md:-translate-x-[50%] -translate-y-[20%] md:-translate-y-[30%] pointer-events-auto">
-                                <Spline scene="https://prod.spline.design/VigyHXd46nnSxAPl/scene.splinecode" />
+                                <SplineRobot scene="https://prod.spline.design/VigyHXd46nnSxAPl/scene.splinecode" />
                             </div>
                         </div>
                     </motion.div>
