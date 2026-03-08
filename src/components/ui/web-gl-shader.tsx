@@ -1,163 +1,118 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import * as THREE from "three"
 
 export function WebGLShader({ className }: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const sceneRef = useRef<{
-        scene: THREE.Scene | null
-        camera: THREE.OrthographicCamera | null
-        renderer: THREE.WebGLRenderer | null
-        mesh: THREE.Mesh | null
-        uniforms: any
-        animationId: number | null
-    }>({
-        scene: null,
-        camera: null,
-        renderer: null,
-        mesh: null,
-        uniforms: null,
-        animationId: null,
-    })
+    const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        if (!canvasRef.current) return
-
         const canvas = canvasRef.current
-        const { current: refs } = sceneRef
+        const container = containerRef.current
+        if (!canvas || !container) return
 
-        const vertexShader = `
-      attribute vec3 position;
-      void main() {
-        gl_Position = vec4(position, 1.0);
-      }
-    `
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null
+        if (!gl) return
 
-        const fragmentShader = `
-      precision highp float;
-      uniform vec2 resolution;
-      uniform float time;
-      uniform float xScale;
-      uniform float yScale;
-      uniform float distortion;
-
-      void main() {
-        vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
-        
-        float d = length(p) * distortion;
-        
-        float rx = p.x * (1.0 + d);
-        float gx = p.x;
-        float bx = p.x * (1.0 - d);
-
-        float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);
-        float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);
-        float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);
-        
-        gl_FragColor = vec4(r, g, b, 1.0);
-      }
-    `
-
-        const initScene = () => {
-            refs.scene = new THREE.Scene()
-            refs.renderer = new THREE.WebGLRenderer({ canvas, alpha: true }) // Added alpha: true
-            refs.renderer.setPixelRatio(window.devicePixelRatio)
-            // refs.renderer.setClearColor(new THREE.Color(0x000000)) // Removed to allow transparency if needed, or keeping it black? Footer background is complicated.
-            // Keeping it black as per original snippet effectively, but maybe we want it transparent?
-            // Original snippet had setClearColor(0x000000). The shader draws over it.
-            refs.renderer.setClearColor(new THREE.Color(0x000000), 0) // Make background transparent so it sits on footer?
-            // Wait, the shader draws opaque colors? "gl_FragColor = vec4(r, g, b, 1.0);"
-            // So it's opaque.
-            // The snippet sets clear color 0x000000.
-            refs.renderer.setClearColor(new THREE.Color(0x000000))
-
-            refs.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1)
-
-            refs.uniforms = {
-                resolution: { value: [canvas.width, canvas.height] }, // Use canvas width/height not window
-                time: { value: 0.0 },
-                xScale: { value: 1.0 },
-                yScale: { value: 0.5 },
-                distortion: { value: 0.05 },
+        const vertexShaderSource = `
+            attribute vec2 position;
+            void main() {
+                gl_Position = vec4(position, 0.0, 1.0);
             }
+        `
 
-            const position = [
-                -1.0, -1.0, 0.0,
-                1.0, -1.0, 0.0,
-                -1.0, 1.0, 0.0,
-                1.0, -1.0, 0.0,
-                -1.0, 1.0, 0.0,
-                1.0, 1.0, 0.0,
-            ]
+        const fragmentShaderSource = `
+            precision highp float;
+            uniform vec2 resolution;
+            uniform float time;
+            uniform float xScale;
+            uniform float yScale;
+            uniform float distortion;
 
-            const positions = new THREE.BufferAttribute(new Float32Array(position), 3)
-            const geometry = new THREE.BufferGeometry()
-            geometry.setAttribute("position", positions)
+            void main() {
+                vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+                float d = length(p) * distortion;
+                float rx = p.x * (1.0 + d);
+                float gx = p.x;
+                float bx = p.x * (1.0 - d);
+                float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);
+                float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);
+                float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);
+                gl_FragColor = vec4(r, g, b, 1.0);
+            }
+        `
 
-            const material = new THREE.RawShaderMaterial({
-                vertexShader,
-                fragmentShader,
-                uniforms: refs.uniforms,
-                side: THREE.DoubleSide,
-            })
+        const compileShader = (type: number, source: string) => {
+            const shader = gl.createShader(type)!
+            gl.shaderSource(shader, source)
+            gl.compileShader(shader)
+            return shader
+        }
 
-            refs.mesh = new THREE.Mesh(geometry, material)
-            refs.scene.add(refs.mesh)
+        const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource)
+        const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource)
 
-            handleResize()
+        const program = gl.createProgram()!
+        gl.attachShader(program, vertexShader)
+        gl.attachShader(program, fragmentShader)
+        gl.linkProgram(program)
+        gl.useProgram(program)
+
+        // Full-screen quad
+        const positions = new Float32Array([-1, -1, 1, -1, -1, 1, 1, -1, -1, 1, 1, 1])
+        const buffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
+
+        const positionLoc = gl.getAttribLocation(program, "position")
+        gl.enableVertexAttribArray(positionLoc)
+        gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0)
+
+        const resolutionLoc = gl.getUniformLocation(program, "resolution")
+        const timeLoc = gl.getUniformLocation(program, "time")
+        const xScaleLoc = gl.getUniformLocation(program, "xScale")
+        const yScaleLoc = gl.getUniformLocation(program, "yScale")
+        const distortionLoc = gl.getUniformLocation(program, "distortion")
+
+        let animationId: number
+        let startTime = performance.now()
+
+        const resize = () => {
+            const w = container.clientWidth
+            const h = container.clientHeight
+            canvas.width = w
+            canvas.height = h
+            gl.viewport(0, 0, w, h)
         }
 
         const animate = () => {
-            if (refs.uniforms) refs.uniforms.time.value += 0.01
-            if (refs.renderer && refs.scene && refs.camera) {
-                refs.renderer.render(refs.scene, refs.camera)
-            }
-            refs.animationId = requestAnimationFrame(animate)
+            const elapsed = (performance.now() - startTime) / 1000
+            gl.uniform2f(resolutionLoc, canvas.width, canvas.height)
+            gl.uniform1f(timeLoc, elapsed)
+            gl.uniform1f(xScaleLoc, 1.0)
+            gl.uniform1f(yScaleLoc, 0.5)
+            gl.uniform1f(distortionLoc, 0.05)
+            gl.drawArrays(gl.TRIANGLES, 0, 6)
+            animationId = requestAnimationFrame(animate)
         }
 
-        const handleResize = () => {
-            if (!refs.renderer || !refs.uniforms || !containerRef.current) return
-            // We need to size it to the container, not the window, if we want it in the footer
-            const container = containerRef.current
-            const width = container.clientWidth
-            const height = container.clientHeight
-            refs.renderer.setSize(width, height, false)
-            refs.uniforms.resolution.value = [width, height]
-        }
-
-        // Need a container ref or assume parent?
-        // The snippet uses window.innerWidth.
-        // I want to use it in the Footer.
-        // I'll wrap the canvas in a div that fills the parent, and size the canvas to that div.
-
-        initScene()
+        resize()
         animate()
-        window.addEventListener("resize", handleResize)
+        window.addEventListener("resize", resize)
 
         return () => {
-            if (refs.animationId) cancelAnimationFrame(refs.animationId)
-            window.removeEventListener("resize", handleResize)
-            if (refs.mesh) {
-                refs.scene?.remove(refs.mesh)
-                refs.mesh.geometry.dispose()
-                if (refs.mesh.material instanceof THREE.Material) {
-                    refs.mesh.material.dispose()
-                }
-            }
-            refs.renderer?.dispose()
+            cancelAnimationFrame(animationId)
+            window.removeEventListener("resize", resize)
+            gl.deleteProgram(program)
+            gl.deleteShader(vertexShader)
+            gl.deleteShader(fragmentShader)
+            gl.deleteBuffer(buffer)
         }
     }, [])
 
-    // Create a local ref for the container to measure size
-    const containerRef = useRef<HTMLDivElement>(null)
-
     return (
-        <div ref={containerRef} className={`absolute inset-0 w-full h-full ${className}`}>
-            <canvas
-                ref={canvasRef}
-                className="block w-full h-full"
-            />
+        <div ref={containerRef} className={`absolute inset-0 w-full h-full ${className ?? ""}`}>
+            <canvas ref={canvasRef} className="block w-full h-full" />
         </div>
     )
 }
