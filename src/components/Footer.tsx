@@ -11,6 +11,8 @@ const WebGLShader = dynamic(
     { ssr: false, loading: () => <div className="absolute inset-0 bg-black" /> }
 );
 
+const PhoneModel = dynamic(() => import("@/components/PhoneModel"), { ssr: false });
+
 
 
 export function Footer() {
@@ -99,7 +101,18 @@ export function Footer() {
                     </motion.div>
                 </div>
 
-
+                {/* Right Side: 3D Phone Model */}
+                <div className="absolute -right-80 -bottom-40 w-full md:w-[700px] lg:w-[1000px] h-[450px] md:h-[550px] lg:h-[650px] pointer-events-none z-10 opacity-90">
+                    <motion.div
+                        className="w-full h-full"
+                        initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+                    >
+                        <PhoneModel />
+                    </motion.div>
+                </div>
 
             </div>
 
