@@ -17,15 +17,15 @@ function Phone({ onClick }: { onClick?: () => void }) {
             scale={0.15}
             position={[0, -1, 0]}
             rotation={[0.2, 0, 0]}
-            onClick={(e) => {
+            onClick={(e: any) => {
                 e.stopPropagation();
                 if (onClick) onClick();
             }}
-            onPointerOver={(e) => {
+            onPointerOver={(e: any) => {
                 e.stopPropagation();
                 setHovered(true);
             }}
-            onPointerOut={(e) => {
+            onPointerOut={(e: any) => {
                 e.stopPropagation();
                 setHovered(false);
             }}

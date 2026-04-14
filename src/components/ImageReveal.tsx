@@ -137,7 +137,7 @@ export function ImageReveal({
                 spotlightPos.current.y = pos.y;
             }
         },
-        [getRelativePos]
+        [getRelativePos, isMobile]
     );
 
     const handleTouchEnd = useCallback(() => {

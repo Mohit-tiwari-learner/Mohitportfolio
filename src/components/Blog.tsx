@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform, MotionValue } from "framer-motion";
+import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -101,7 +102,7 @@ function BlogSectionHeader() {
                         return (
                             <RevealItem key={i} progress={scrollYProgress} index={i} total={totalItems}>
                                 <div ref={(el) => { itemsRef.current[i] = el; }} className="relative inline-block w-[1.5em] h-[0.7em] md:h-[0.75em] md:w-[1.8em] rounded-[0.2em] md:rounded-[0.25em] overflow-hidden align-middle mx-1 shadow-2xl transition-transform duration-500 hover:scale-105 hover:-translate-y-2 will-change-transform">
-                                    <img src={item.src} alt="Gallery Image" className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-500 scale-110 hover:scale-100" />
+                                    <Image src={item.src || ""} alt="Gallery Image" fill className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-500 scale-110 hover:scale-100" sizes="20vw" />
                                 </div>
                             </RevealItem>
                         );

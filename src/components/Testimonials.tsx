@@ -135,7 +135,7 @@ export function Testimonials() {
                     drag="x"
                     dragConstraints={{ right: 0, left: -sliderWidth }}
                     dragElastic={0.15}
-                    dragTransition={{ bounceStiffness: 250, bounceDamping: 25 }} // Smooth Inertia
+                    dragTransition={{ bounceStiffness: 250, bounceDamping: 35 }} // Smooth Inertia
                     onWheel={handleWheel}
                     style={{ x }}
                     className="flex gap-6 sm:gap-8 lg:gap-10 items-stretch w-max pr-5 sm:pr-8 lg:pr-12 pointer-events-auto pb-10"
@@ -182,7 +182,7 @@ export function Testimonials() {
                                 <div className="z-10 relative mt-4">
                                     <Quote className="w-10 h-10 text-violet-500/20 mb-8 transform -scale-x-100 group-hover:scale-110 group-hover:-scale-x-110 transition-transform duration-300" />
                                     <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed font-medium mb-8">
-                                        "{t.quote}"
+                                        &quot;{t.quote}&quot;
                                     </p>
                                 </div>
 
