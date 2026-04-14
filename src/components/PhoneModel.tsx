@@ -1,21 +1,39 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Environment } from "@react-three/drei";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 
-function Phone() {
+function Phone({ onClick }: { onClick?: () => void }) {
     const { scene } = useGLTF("/phone.glb");
+    const [hovered, setHovered] = useState(false);
+    
+    // Change cursor dynamically when hovering over the 3D model
+    if (typeof window !== "undefined") {
+        document.body.style.cursor = hovered ? "pointer" : "auto";
+    }
     return (
         <primitive
             object={scene}
             scale={0.15}
             position={[0, -1, 0]}
             rotation={[0.2, 0, 0]}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (onClick) onClick();
+            }}
+            onPointerOver={(e) => {
+                e.stopPropagation();
+                setHovered(true);
+            }}
+            onPointerOut={(e) => {
+                e.stopPropagation();
+                setHovered(false);
+            }}
         />
     );
 }
 
-export default function PhoneModel() {
+export default function PhoneModel({ onPhoneClick }: { onPhoneClick?: () => void }) {
     return (
         <div style={{ width: "100%", height: "100%", position: "relative" }}>
             <Canvas
@@ -34,7 +52,7 @@ export default function PhoneModel() {
                         castShadow
                     />
                     <pointLight position={[-5, 5, 5]} intensity={0.6} />
-                    <Phone />
+                    <Phone onClick={onPhoneClick} />
                     <Environment preset="sunset" />
                     <OrbitControls
                         enableZoom={false}

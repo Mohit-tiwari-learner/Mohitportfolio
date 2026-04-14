@@ -6,6 +6,7 @@ import { SectionDivider } from "@/components/SectionDivider";
 import { About } from "@/components/About";
 import { FeaturedWorkSection } from "@/components/FeaturedWork/FeaturedWorkSection";
 import { Blog } from "@/components/Blog";
+import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
@@ -23,9 +24,10 @@ export default function Home() {
                 <section id="projects">
                     <FeaturedWorkSection />
                 </section>
-                <section id="blog">
+                <section id="blog-header">
                     <Blog />
                 </section>
+                <Testimonials />
                 <Footer />
             </main>
         </>

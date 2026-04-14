@@ -1,291 +1,125 @@
 "use client";
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-    Calendar,
-    Clock,
-    ArrowUpRight,
-    Sparkles,
-    Brain,
-    BarChart3,
-    Code2,
-    Layers,
-} from "lucide-react";
+import React, { useRef, useEffect } from "react";
+import { motion, useInView, useScroll, useTransform, MotionValue } from "framer-motion";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
-interface BlogPost {
-    title: string;
-    excerpt: string;
-    date: string;
-    readTime: string;
-    category: string;
-    categoryIcon: React.ElementType;
-    gradient: string;
-    glowColor: string;
-    href: string;
-    featured?: boolean;
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
 }
 
-const blogPosts: BlogPost[] = [
-    {
-        title: "How I Built an AI Interview Coach with GPT-4 & Whisper",
-        excerpt:
-            "A deep dive into the architecture behind real-time speech analysis, prompt engineering techniques, and the challenges of sub-2s latency feedback loops.",
-        date: "Feb 15, 2026",
-        readTime: "8 min read",
-        category: "AI / ML",
-        categoryIcon: Brain,
-        gradient: "from-violet-500 via-purple-500 to-indigo-500",
-        glowColor: "rgba(139, 92, 246, 0.15)",
-        href: "#",
-        featured: true,
-    },
-    {
-        title: "Stress Testing Financial Models with Ensemble ML",
-        excerpt:
-            "How ensemble regression models can forecast Credit-Deposit Ratios using RBI and NFHS datasets for banking resilience.",
-        date: "Jan 28, 2026",
-        readTime: "6 min read",
-        category: "Data Science",
-        categoryIcon: BarChart3,
-        gradient: "from-emerald-500 via-teal-500 to-cyan-500",
-        glowColor: "rgba(16, 185, 129, 0.15)",
-        href: "#",
-    },
-    {
-        title: "Building Scalable IoT Architectures on AWS",
-        excerpt:
-            "Lessons learned from building a smart parking system that handles 10k+ concurrent users with 99.9% uptime.",
-        date: "Jan 10, 2026",
-        readTime: "5 min read",
-        category: "Engineering",
-        categoryIcon: Layers,
-        gradient: "from-orange-500 via-amber-500 to-yellow-500",
-        glowColor: "rgba(249, 115, 22, 0.15)",
-        href: "#",
-    },
-    {
-        title: "The Art of Prompt Engineering for Production Apps",
-        excerpt:
-            "Practical strategies for writing reliable, cost-effective prompts that work consistently at scale in production environments.",
-        date: "Dec 20, 2025",
-        readTime: "7 min read",
-        category: "AI / ML",
-        categoryIcon: Sparkles,
-        gradient: "from-pink-500 via-rose-500 to-red-500",
-        glowColor: "rgba(236, 72, 153, 0.15)",
-        href: "#",
-    },
-];
+/* ─────────── Reveal Item ─────────── */
+const RevealItem = ({ children, progress, index, total }: { children: React.ReactNode, progress: MotionValue<number>, index: number, total: number }) => {
+    const start = index / total;
+    const end = (index + 1.5) / total;
+    const opacity = useTransform(progress, [Math.max(0, start - 0.1), Math.min(1, end)], [0.15, 1]);
+    return <motion.div style={{ opacity }} className="inline-block relative">{children}</motion.div>;
+};
 
 /* ─────────── Section Header ─────────── */
 function BlogSectionHeader() {
-    const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { once: true });
+    const containerRef = useRef<HTMLDivElement>(null);
+    const itemsRef = useRef<(HTMLDivElement | HTMLSpanElement | null)[]>([]);
+    const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+    
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start 0.85", "center center"]
+    });
+
+    useEffect(() => {
+        if (!containerRef.current || itemsRef.current.length === 0) return;
+
+        const triggerFallingAnimation = () => {
+            const fallDistance = window.innerHeight;
+            itemsRef.current.forEach((item, index) => {
+                if (!item) return;
+                gsap.set(item, { y: 0, x: 0, rotationZ: 0, opacity: 1, filter: 'blur(0px)' });
+                const randomX = (Math.random() - 0.5) * 500;
+                const randomRotation = (Math.random() - 0.5) * 720;
+                const randomDelay = index * 0.1;
+                const fallDuration = 1.0 + Math.random() * 0.8;
+                gsap.to(item, { y: fallDistance, x: randomX, rotationZ: randomRotation, opacity: 0, filter: 'blur(8px)', duration: fallDuration, delay: randomDelay, ease: 'power3.in' });
+            });
+        };
+
+        const reverseFallingAnimation = () => {
+            itemsRef.current.forEach((item, index) => {
+                if (!item) return;
+                const randomDelay = index * 0.015;
+                gsap.to(item, { y: 0, x: 0, rotationZ: 0, opacity: 1, filter: 'blur(0px)', duration: 0.8, delay: randomDelay, ease: 'power2.out' });
+            });
+        };
+
+        let animationStarted = false;
+        const scrollTrigger = ScrollTrigger.create({
+            trigger: containerRef.current,
+            start: "top -15%",
+            onEnter: () => { animationStarted = true; triggerFallingAnimation(); },
+            onLeaveBack: () => { if (animationStarted) { animationStarted = false; reverseFallingAnimation(); } }
+        });
+
+        const handleResize = () => ScrollTrigger.refresh();
+        window.addEventListener('resize', handleResize);
+        return () => { window.removeEventListener('resize', handleResize); scrollTrigger.kill(); };
+    }, []);
+
+    const visualContent = [
+        { type: "text", text: "BLOG" },
+        { type: "text", text: "&" },
+        { type: "image", src: "/gallery/IMG_1.png" },
+        { type: "text", text: "INSIGHTS" },
+        { type: "text", text: "THOUGHTS" },
+        { type: "image", src: "/gallery/IMG_2.png" },
+        { type: "text", text: "ON" },
+        { type: "text", text: "AI," },
+        { type: "text", text: "DATA" },
+        { type: "image", src: "/gallery/IMG_3.jpg" },
+        { type: "text", text: "SCIENCE," },
+        { type: "text", text: "&" },
+        { type: "text", text: "ENGINEERING" },
+        { type: "image", src: "/gallery/20260222_155343_896.jpg.jpeg" },
+    ];
+    const totalItems = visualContent.length;
 
     return (
-        <motion.div ref={ref} className="mb-14 md:mb-20">
-            <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5 }}
-                className="text-primary font-semibold tracking-[0.25em] uppercase text-xs block mb-5"
-            >
-                Blog & Insights
+        <div ref={containerRef} className="pb-10 flex flex-col items-center">
+            <motion.p initial={{ opacity: 0, y: 12 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-primary font-bold tracking-[0.25em] uppercase text-xs mb-8 md:mb-12">
+                Explore More
             </motion.p>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                    className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-foreground leading-[0.95] max-w-xl"
-                >
-                    Thoughts &{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500">
-                        Learnings
-                    </span>
-                </motion.h2>
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="text-muted-foreground text-sm md:text-base max-w-xs leading-relaxed md:text-right"
-                >
-                    Writing about AI, data science, engineering, and the craft
-                    of building intelligent software.
-                </motion.p>
+            <div className="text-center font-black uppercase tracking-tight leading-none text-[15vw] sm:text-[12vw] md:text-[8vw] text-foreground flex flex-wrap justify-center items-center gap-x-5 gap-y-6 md:gap-x-6 md:gap-y-6 max-w-[95%] mx-auto" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}>
+                {visualContent.map((item, i) => {
+                    if (item.type === "text") {
+                        return (
+                            <RevealItem key={i} progress={scrollYProgress} index={i} total={totalItems}>
+                                <div ref={(el) => { itemsRef.current[i] = el; }} className="inline-block origin-bottom will-change-transform">
+                                    <span className="inline-block transform scale-y-110 md:scale-y-125 origin-bottom">{item.text}</span>
+                                </div>
+                            </RevealItem>
+                        );
+                    } else {
+                        return (
+                            <RevealItem key={i} progress={scrollYProgress} index={i} total={totalItems}>
+                                <div ref={(el) => { itemsRef.current[i] = el; }} className="relative inline-block w-[1.5em] h-[0.7em] md:h-[0.75em] md:w-[1.8em] rounded-[0.2em] md:rounded-[0.25em] overflow-hidden align-middle mx-1 shadow-2xl transition-transform duration-500 hover:scale-105 hover:-translate-y-2 will-change-transform">
+                                    <img src={item.src} alt="Gallery Image" className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-500 scale-110 hover:scale-100" />
+                                </div>
+                            </RevealItem>
+                        );
+                    }
+                })}
             </div>
-
-            <motion.div
-                initial={{ scaleX: 0 }}
-                animate={isInView ? { scaleX: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="mt-8 h-px bg-gradient-to-r from-violet-500 via-purple-500 to-transparent origin-left"
-            />
-        </motion.div>
+        </div>
     );
 }
 
-/* ─────────── Featured Card ─────────── */
-function FeaturedBlogCard({ post }: { post: BlogPost }) {
-    const ref = useRef<HTMLAnchorElement>(null);
-    const isInView = useInView(ref, { once: true, margin: "-10%" });
-
-    return (
-        <motion.a
-            ref={ref}
-            href={post.href}
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="group relative block mb-10 md:mb-14"
-        >
-            <div className="relative p-8 md:p-12 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-border hover:shadow-2xl">
-                {/* Background glow */}
-                <div
-                    className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full blur-[140px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: post.glowColor }}
-                />
-
-                {/* Shimmer line */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/5 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-8">
-                    {/* Left — icon & label */}
-                    <div className="flex-shrink-0">
-                        <div
-                            className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${post.gradient} flex items-center justify-center shadow-lg`}
-                        >
-                            <post.categoryIcon className="w-7 h-7 text-white" />
-                        </div>
-                    </div>
-
-                    {/* Middle — content */}
-                    <div className="flex-1 space-y-3">
-                        <div className="flex items-center gap-3 flex-wrap">
-                            <span
-                                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest bg-gradient-to-r ${post.gradient} text-white`}
-                            >
-                                <Sparkles className="w-3 h-3" />
-                                Featured
-                            </span>
-                            <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Calendar className="w-3 h-3" /> {post.date}
-                            </span>
-                            <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Clock className="w-3 h-3" /> {post.readTime}
-                            </span>
-                        </div>
-
-                        <h3 className="text-2xl md:text-3xl font-black text-foreground leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-500 group-hover:to-indigo-500 transition-all duration-300">
-                            {post.title}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base max-w-2xl">
-                            {post.excerpt}
-                        </p>
-                    </div>
-
-                    {/* Right — arrow */}
-                    <div className="flex-shrink-0 self-end md:self-center">
-                        <div className="p-3 rounded-xl border border-border/50 bg-muted/30 group-hover:bg-violet-500/10 group-hover:border-violet-500/30 transition-all duration-300">
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-violet-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </motion.a>
-    );
-}
-
-/* ─────────── Regular Card ─────────── */
-function BlogCard({ post, index }: { post: BlogPost; index: number }) {
-    const ref = useRef<HTMLAnchorElement>(null);
-    const isInView = useInView(ref, { once: true, margin: "-5%" });
-
-    return (
-        <motion.a
-            ref={ref}
-            href={post.href}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            className="group relative block"
-        >
-            <div className="relative h-full p-6 md:p-8 rounded-2xl border border-border/40 bg-card/40 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-border/80 hover:shadow-xl hover:-translate-y-1">
-                {/* Hover glow */}
-                <div
-                    className="absolute -bottom-20 -right-20 w-[300px] h-[300px] rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: post.glowColor }}
-                />
-
-                <div className="relative z-10 space-y-4">
-                    {/* Top row */}
-                    <div className="flex items-center justify-between">
-                        <span
-                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-widest bg-gradient-to-r ${post.gradient} text-white`}
-                        >
-                            <post.categoryIcon className="w-3 h-3" />
-                            {post.category}
-                        </span>
-                        <ArrowUpRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-violet-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-lg md:text-xl font-bold text-foreground leading-snug group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-500 group-hover:to-indigo-500 transition-all duration-300">
-                        {post.title}
-                    </h3>
-
-                    {/* Excerpt */}
-                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                        {post.excerpt}
-                    </p>
-
-                    {/* Meta */}
-                    <div className="flex items-center gap-4 pt-2 border-t border-border/30">
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Calendar className="w-3 h-3" /> {post.date}
-                        </span>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Clock className="w-3 h-3" /> {post.readTime}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </motion.a>
-    );
-}
-
-/* ─────────── Main Export ─────────── */
 export function Blog() {
-    const featuredPost = blogPosts.find((p) => p.featured);
-    const regularPosts = blogPosts.filter((p) => !p.featured);
-
     return (
-        <section
-            id="blog"
-            className="relative bg-background text-foreground overflow-hidden"
-        >
-            {/* Section borders */}
+        <section id="blog" className="relative bg-background text-foreground overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
             </div>
-
-            <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 lg:py-36">
+            <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-24 lg:pt-36">
                 <BlogSectionHeader />
-
-                {/* Featured post */}
-                {featuredPost && <FeaturedBlogCard post={featuredPost} />}
-
-                {/* Grid of regular posts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {regularPosts.map((post, index) => (
-                        <BlogCard key={post.title} post={post} index={index} />
-                    ))}
-                </div>
             </div>
         </section>
     );

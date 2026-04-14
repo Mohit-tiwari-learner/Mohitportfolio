@@ -73,36 +73,11 @@ export function Footer() {
                         I&apos;m currently available for freelance projects and open to full-time opportunities. If you have an idea that needs to be realized, let&apos;s talk.
                     </motion.p>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="relative w-full flex justify-start pointer-events-auto"
-                    >
-                        {/* Huge Ambient Violet Glow Behind Button */}
-                        <div className="absolute top-1/2 left-0 lg:left-24 -translate-y-1/2 w-[200px] h-[100px] bg-violet-600/30 blur-[80px] rounded-full pointer-events-none" />
 
-                        <div onClick={() => setIsFormOpen(true)} className="group relative cursor-pointer inline-block z-10">
-                            {/* Magnetic Button Surface Glow */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-violet-500/40 via-purple-500/40 to-indigo-500/40 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                            <LiquidButton
-                                variant="default"
-                                size="default"
-                                className="relative bg-white text-black font-bold text-base md:text-xl px-10 py-8 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_80px_30px_rgba(139,92,246,0.3)] transition-all duration-500 group-hover:scale-[1.02]"
-                            >
-                                <span className="relative z-10 flex items-center gap-3 tracking-wide">
-                                    Let&apos;s Connect
-                                    <ArrowRight className="ml-1 w-5 h-5 group-hover:translate-x-3 transition-transform duration-300" strokeWidth={2.5} />
-                                </span>
-                            </LiquidButton>
-                        </div>
-                    </motion.div>
                 </div>
 
                 {/* Right Side: 3D Phone Model */}
-                <div className="absolute -right-80 -bottom-40 w-full md:w-[700px] lg:w-[1000px] h-[450px] md:h-[550px] lg:h-[650px] pointer-events-none z-10 opacity-90">
+                <div className="absolute -right-80 -bottom-40 w-full md:w-[700px] lg:w-[1000px] h-[450px] md:h-[550px] lg:h-[650px] pointer-events-auto z-10 opacity-90">
                     <motion.div
                         className="w-full h-full"
                         initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
@@ -110,14 +85,14 @@ export function Footer() {
                         viewport={{ once: true }}
                         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
                     >
-                        <PhoneModel />
+                        <PhoneModel onPhoneClick={() => setIsFormOpen(true)} />
                     </motion.div>
                 </div>
 
             </div>
 
             {/* Bottom Row: Minimalist Navigation & Copyright */}
-            <div className="w-full">
+            <div className="w-full relative z-30 pointer-events-auto">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pt-8 border-t border-white/10 uppercase tracking-[0.15em] text-[10px] md:text-xs text-white/40 font-semibold w-full">
 
                     {/* Copyright & Location (Left) */}
